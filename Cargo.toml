@@ -1,0 +1,7 @@
+[package]
+name = "learn_candle_rs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+candle-core = { version = "0.7.2", features = ["metal"] }
