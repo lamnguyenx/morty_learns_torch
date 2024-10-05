@@ -1,7 +1,4 @@
-[package]
-name = "learn_candle_rs"
-version = "0.1.0"
-edition = "2021"
+[workspace]
 
-[dependencies]
-candle-core = { version = "0.7.2", features = ["metal"] }
+resolver = "2"
+members = ["src/beginner_source/blitz"]
