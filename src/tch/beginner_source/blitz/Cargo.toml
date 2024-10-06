@@ -1,7 +1,9 @@
 [package]
-name = "blitz"
+name = "blitz-beginner_source-tch"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+local_utils = { path = "../../../local_utils"}
 candle-core = { version = "0.7.2", features = ["metal"] }
+tch = "0.17.0"

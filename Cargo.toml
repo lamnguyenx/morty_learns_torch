@@ -1,4 +1,8 @@
 [workspace]
 
 resolver = "2"
-members = ["src/beginner_source/blitz"]
+members = [
+    "src/local_utils",
+    "src/candle/beginner_source/blitz",
+    "src/tch/beginner_source/blitz",
+]
