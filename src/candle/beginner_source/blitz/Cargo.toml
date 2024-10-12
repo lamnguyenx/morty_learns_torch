@@ -5,4 +5,5 @@ edition = "2021"
 
 [dependencies]
 local_utils = { path = "../../../local_utils"}
+utils_candle = { path = "../../utils_candle"}
 candle-core = { version = "0.7.2", features = ["metal"] }

@@ -18,3 +18,21 @@ macro_rules! dbgts {
         println!("\n{}:{}\n{} =\n {}", file, line, stringify!(&$val), value);
     }};
 }
+
+#[macro_export]
+macro_rules! get_env {
+    ($var:expr) => {
+        std::env::var($var).expect(&format!("Environment variable '{}' not found", $var))
+    };
+
+    ($var:expr, $default:expr) => {
+        std::env::var($var).unwrap_or_else(|_| $default.to_string())
+    };
+
+    ($var:expr, $default:expr, $type:ty) => {
+        std::env::var($var)
+            .ok()
+            .and_then(|v| v.parse::<$type>().ok())
+            .unwrap_or($default)
+    };
+}

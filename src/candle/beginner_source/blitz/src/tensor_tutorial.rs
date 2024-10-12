@@ -12,7 +12,7 @@ be right at home with the Tensor API. If not, follow along in this quick
 API walkthrough.
 
 */
-use candle_core::{Device, Tensor};
+use candle_core::Tensor;
 use local_utils::dbgts;
 
 pub fn tensor_tutorial() {
@@ -26,7 +26,7 @@ pub fn tensor_tutorial() {
     //
     // Tensors can be created directly from data. The data type is automatically inferred.
 
-    let device = Device::Cpu;
+    let device = utils_candle::get_device_from_current_env().unwrap();
 
     // new tensor from array with inherited shape
     let arr_2d = [[1_u32, 2], [3, 4]];

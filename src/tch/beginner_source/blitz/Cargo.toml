@@ -5,5 +5,6 @@ edition = "2021"
 
 [dependencies]
 local_utils = { path = "../../../local_utils"}
-candle-core = { version = "0.7.2", features = ["metal"] }
+utils_tch = { path = "../../utils_tch"}
 tch = "0.17.0"
+thiserror = "1.0.64"

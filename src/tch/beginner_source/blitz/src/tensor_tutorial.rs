@@ -15,7 +15,7 @@ API walkthrough.
 
 */
 use local_utils::dbgts;
-use tch::{Device, Tensor};
+use tch::Tensor;
 
 pub fn tensor_tutorial() {
     // #####################################################################
@@ -28,7 +28,8 @@ pub fn tensor_tutorial() {
     //
     // Tensors can be created directly from data. The data type is automatically inferred.
 
-    let device = Device::Cpu;
+    let device = utils_tch::get_device_from_current_env().unwrap();
+    dbg!(device);
 
     // new tensor from array with inherited shape
     // N/A

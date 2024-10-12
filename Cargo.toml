@@ -4,5 +4,7 @@ resolver = "2"
 members = [
     "src/local_utils",
     "src/candle/beginner_source/blitz",
+    "src/candle/utils_candle",
     "src/tch/beginner_source/blitz",
+    "src/tch/utils_tch",
 ]
