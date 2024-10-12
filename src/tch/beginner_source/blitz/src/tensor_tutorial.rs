@@ -44,5 +44,14 @@ pub fn tensor_tutorial() {
     // new tensor from vec with specified shape
     let data = (-30..30).collect::<Vec<i16>>();
     let shape = [3, 4, 5];
-    dbgts!(Tensor::from_slice(&data).reshape(&shape).to(device))
+    let x_data = dbgts!(Tensor::from_slice(&data).reshape(&shape).to(device));
+
+
+    // ##############################################################
+    //  **From another tensor:**
+    //
+    //  The new tensor retains the properties (shape, datatype) of the argument tensor, unless explicitly overridden.
+    // let tensor_00 =
+    // let tensor_01 = Tensor::ones_like(&self);
+
 }

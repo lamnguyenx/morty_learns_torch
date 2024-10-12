@@ -1,22 +1,34 @@
 #[macro_export]
 macro_rules! dbgts {
-    ($val:expr) => {{
-        // Get the file and line information
-        let file = std::file!();
-        let line = std::line!();
+    // NOTE: We cannot use `concat!` to make a static string as a format argument
+    // of `eprintln!` because `file!` could contain a `{` or
+    // `$val` expression could be a block (`{ .. }`), in which case the `eprintln!`
+    // will be malformed.
+    () => {
+        eprintln!("[{}:{}:{}]", file!(), line!(), column!())
+    };
+    ($val:expr $(,)?) => {
+        // Use of `match` here is intentional because it affects the lifetimes
+        // of temporaries - https://stackoverflow.com/a/48732525/1063961
+        match $val {
+            tmp => {
 
-        // Create a reference to the value
+                let prefix = "    ";
+                let value = format!("{}", &tmp)
+                    .lines()
+                    .map(|line| format!("{}{}", prefix, line))
+                    .collect::<Vec<_>>()
+                    .join("\n");
 
-        let prefix = "    ";
-        let value = format!("{}", &$val)
-            .lines()
-            .map(|line| format!("{}{}", prefix, line))
-            .collect::<Vec<_>>()
-            .join("\n");
-
-        // Print the variable name, value, file, and line number
-        println!("\n{}:{}\n{} =\n {}", file, line, stringify!(&$val), value);
-    }};
+                eprintln!("[{}:{}:{}] {} =\n{}",
+                    file!(), line!(), column!(), stringify!($val), &value);
+                tmp
+            }
+        }
+    };
+    ($($val:expr),+ $(,)?) => {
+        ($($crate::dbg!($val)),+,)
+    };
 }
 
 #[macro_export]
