@@ -4,7 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-local_utils = { path = "../../../local_utils"}
-utils_tch = { path = "../../utils_tch"}
 tch = "0.17.0"
 thiserror = "1.0.64"
+kits = { path = "../../../kits", features=["tch"]}

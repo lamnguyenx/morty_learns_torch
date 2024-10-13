@@ -14,7 +14,7 @@ be right at home with the Tensor API. If not, follow along in this quick
 API walkthrough.
 
 */
-use local_utils::dbgts;
+use kits::tch_kit::dbgts;
 use tch::Tensor;
 
 pub fn tensor_tutorial() {
@@ -28,7 +28,7 @@ pub fn tensor_tutorial() {
     //
     // Tensors can be created directly from data. The data type is automatically inferred.
 
-    let device = utils_tch::get_device_from_current_env().unwrap();
+    let device = kits::tch_kit::get_device_from_current_env().unwrap();
     dbg!(device);
 
     // new tensor from array with inherited shape
@@ -44,14 +44,21 @@ pub fn tensor_tutorial() {
     // new tensor from vec with specified shape
     let data = (-30..30).collect::<Vec<i16>>();
     let shape = [3, 4, 5];
-    let x_data = dbgts!(Tensor::from_slice(&data).reshape(&shape).to(device));
-
+    let tensor_3d = dbgts!(Tensor::from_slice(&data).reshape(&shape).to(device));
 
     // ##############################################################
     //  **From another tensor:**
     //
     //  The new tensor retains the properties (shape, datatype) of the argument tensor, unless explicitly overridden.
-    // let tensor_00 =
-    // let tensor_01 = Tensor::ones_like(&self);
+    dbgts!(Tensor::ones_like(&tensor_3d));
+    dbgts!(Tensor::rand_like(&tensor_3d.to_dtype(tch::Kind::Float, false, true)).to_device(device)); // error if no conversion to float
 
+    // #####################################################################
+    //  **With random or constant values:**
+    //
+    //  ``shape`` is a tuple of tensor dimensions. In the functions below, it determines the dimensionality of the output tensor.
+    let shape = [3, 4, 5];
+    dbgts!(Tensor::rand(&shape, (tch::Kind::Float, device)));
+    dbgts!(Tensor::ones(&shape, (tch::Kind::Float, device)));
+    dbgts!(Tensor::zeros(&shape, (tch::Kind::Float, device)));
 }

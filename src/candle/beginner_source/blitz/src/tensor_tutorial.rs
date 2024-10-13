@@ -13,7 +13,7 @@ API walkthrough.
 
 */
 use candle_core::Tensor;
-use local_utils::dbgts;
+use kits::candle_kit::dbgts;
 
 pub fn tensor_tutorial() {
     // #####################################################################
@@ -26,7 +26,7 @@ pub fn tensor_tutorial() {
     //
     // Tensors can be created directly from data. The data type is automatically inferred.
 
-    let device = utils_candle::get_device_from_current_env().unwrap();
+    let device = kits::candle_kit::get_device_from_current_env().unwrap();
 
     // new tensor from array with inherited shape
     let arr_2d = [[1_u32, 2], [3, 4]];
@@ -42,5 +42,26 @@ pub fn tensor_tutorial() {
     // new tensor from vec with specified shape
     let data = (0..60).collect::<Vec<u32>>();
     let shape = (3, 4, 5);
-    dbgts!(Tensor::from_vec(data, shape, &device).unwrap());
+    let tensor_3d = dbgts!(Tensor::from_vec(data, shape, &device).unwrap());
+
+    // ##############################################################
+    //  **From another tensor:**
+    //
+    //  The new tensor retains the properties (shape, datatype) of the argument tensor, unless explicitly overridden.
+    dbgts!(Tensor::ones_like(&tensor_3d).unwrap());
+    dbgts!(Tensor::rand_like(
+        &tensor_3d.to_dtype(candle_core::DType::F16).unwrap(),
+        -1.0,
+        1.0
+    )
+    .unwrap()); // error if no conversion to float
+
+    // #####################################################################
+    //  **With random or constant values:**
+    //
+    //  ``shape`` is a tuple of tensor dimensions. In the functions below, it determines the dimensionality of the output tensor.
+    let shape = [3, 4, 5];
+    dbgts!(Tensor::rand(-1.0, 1.0, &shape, &device).unwrap());
+    dbgts!(Tensor::ones(&shape, candle_core::DType::F16, &device).unwrap());
+    dbgts!(Tensor::zeros(&shape, candle_core::DType::F16, &device).unwrap());
 }

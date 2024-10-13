@@ -1,9 +1,0 @@
-[package]
-name = "utils_tch"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-local_utils = { path = "../../local_utils" }
-tch = "0.17.0"
-thiserror = "1.0.64"
